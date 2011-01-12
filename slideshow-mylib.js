@@ -285,11 +285,12 @@ SlideShow.prototype.gotoSlide = function(slideNumber)
    var me = this;   
    if(!me.startTimer)
    {
+      clearTimeout(me.transitionOutTimer);
       clearTimeout(me.transitionTimer);
-      if(me.transitionOutTimer)
-      {
-         clearTimeout(me.transitionOutTimer);
-      }
+      //if(me.transitionOutTimer)
+      //{
+      //   clearTimeout(me.transitionOutTimer);
+      //}
    }
    
    if(me.transitionOutGoing || me.transitionInGoing)
