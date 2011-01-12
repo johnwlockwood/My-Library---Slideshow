@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> 
+<html lang="en-US">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Slide Show</title>
+	<link rel="stylesheet" type="text/css" href="slideshow.css" media="all">
+</head>
+<body>
+	
+
+<h2>first slide show</h2>
+<div id="slideShowWrapperA" class="slideshowWrapper">
+<div id="slideshowA" class="slideshow">
+
+
+<div class="slide">
+<a href="/about-us/">
+<img src="images/slide1.png" alt="the first slide">
+</a>
+</div>
+
+<div class="slide">
+<a href="http://www.google.com">
+<img src="images/slide2.png" alt="the second slide">
+</a>
+</div>
+
+<div class="slide">
+<a href="/contact-us/">
+<img src="images/slide3.png" alt="the third slide">
+</a>
+</div>
+
+
+<div class="nav"></div>
+</div>
+</div>
+
+<h2>second slide show: nav restyled/repositioned with css changes</h2>
+
+<div id="slideShowWrapperB" class="slideshowWrapper">
+<div id="slideshowB" class="slideshow">
+
+
+<div class="slide">
+<a href="http://www.google.com">
+<img src="images/slide2.png" alt="the first slide">
+</a>
+</div>
+
+<div class="slide">
+<a href="http://www.bing.com">
+<img src="images/slide1.png" alt="the second slide">
+</a>
+</div>
+
+
+
+<div class="slide">
+<a href="http://www.wikipedia.org">
+<img src="images/slide3.png" alt="the third slide">
+</a>
+</div>
+
+<div class="slide">
+<a href="http://www.amazon.com">
+<img src="images/slide1.png" alt="the fourth slide">
+</a>
+</div>
+
+
+<div class="nav"></div>
+</div>
+</div>
+
+
+<h2>third slide show: nav removed, image cropped</h2>
+
+<div id="slideShowWrapperC" class="slideshowWrapper">
+<div id="slideshowC" class="slideshow">
+
+
+<div class="slide">
+<a href="http://www.google.com">
+<img src="images/slide2.png" alt="the first slide">
+</a>
+</div>
+
+<div class="slide">
+<a href="http://www.bing.com">
+<img src="images/slide1.png" alt="the second slide">
+</a>
+</div>
+
+</div>
+</div>
+
+<script type="text/javascript" src="third-party-js/mylib.js"></script>
+<script type="text/javascript" src="third-party-js/mylib-transform-min.js"></script>
+<script type="text/javascript" src="slideshow-mylib.js"></script>
+<script type="text/javascript">
+var API,D,E,F;
+API = API || {};
+var global = this;
+var slideshowManager;
+
+
+(function(){
+      
+      
+var onLoad = function()
+{
+   if(API &&
+      API.areFeatures && API.areFeatures('documentReady',
+         'attachListener',
+         'showElement',
+         'createElementWithAttributes',
+         'getEBI','SlideShowsManager') && API.documentReady()) 
+   {
+
+         
+         var defaultSlideShowOptions = {
+            "transitionDelay":3000,
+            "startDelay":2000,
+            "transition":{ effects:[API.effects.scaleY, API.effects.fade], duration:1000 }
+         };
+         
+         var slideshowManagerOptions = {
+         	 'slideshowCN':'slideshow',
+         	 "idCustomOptions":{
+         	 	 "slideshowB":
+         	 	 {
+					"transitionDelay":3000,
+					"startDelay":4000,
+					"transition":{ 
+						effects:[API.effects.shake, API.effects.fade], 
+						duration:1000,ease:API.ease.quad }
+				 },
+				 "slideshowC":
+         	 	 {
+					"transitionDelay":3000,
+					"startDelay":1000,
+					"transition":{ 
+						effects:API.effects.fade, 
+						duration:1000,ease:API.ease.sigmoid }
+				 }
+            }
+         };
+         
+         slideshowManager = new API.SlideShowsManager(slideshowManagerOptions
+            ,defaultSlideShowOptions);
+         
+   }
+   
+   
+}
+if(API &&
+      API.areFeatures && API.areFeatures('documentReady'))
+{
+	API.attachDocumentReadyListener(onLoad);
+}
+
+})();
+</script>
+</body>
+</html>
