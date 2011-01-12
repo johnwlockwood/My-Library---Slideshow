@@ -179,15 +179,24 @@ SlideShowsManager.prototype.add = function(slideshow)
       
 function SlideShow(el,options)
 {
-   options = options || {};
    var me = this;
+   me.options = options || {};
    me.el = el;
+   if(me.options.gap >= 0)
+   {
+      me.options.gap = me.options.gap;
+   } else 
+   {
+      me.options.gap = -1;
+   }
    me.startTimer = null;
    me.transitionTimer = null;
-   me.transitionDelay = options.transitionDelay || 15000;
-   me.startDelay = options.startDelay || 5000;
+   me.transitionOutTimer = null;
+   me.transitionDelay = me.options.transitionDelay || 15000;
+   me.startDelay = me.options.startDelay || 5000;
    me.currentSlideNumber = 0;
-   me.transition = options.transition || { effects:API.effects.fade, duration:1000 };
+   me.transitionOut = me.options.transitionOut || { effects:API.effects.fade, duration:1000 };
+   me.transitionIn = me.options.transitionIn || { duration:0 };
    me.urls = [];
    
    me.start_ = function()
@@ -277,9 +286,13 @@ SlideShow.prototype.gotoSlide = function(slideNumber)
    if(!me.startTimer)
    {
       clearTimeout(me.transitionTimer);
+      if(me.transitionOutTimer)
+      {
+         clearTimeout(me.transitionOutTimer);
+      }
    }
    
-   if(me.transitionGoing)
+   if(me.transitionOutGoing || me.transitionInGoing)
    {
       me.goneto = true;
    }
@@ -335,6 +348,8 @@ SlideShow.prototype.reOrderWithNAtTop = function(slideNumber)
    }
 }
 
+var doShowNext;
+
 SlideShow.prototype.transitionToNextSlide = function()
 {
    var me = this;
@@ -342,16 +357,38 @@ SlideShow.prototype.transitionToNextSlide = function()
    var nextSlideNumber = (new Number(me.currentSlideNumber+1))%me.slideCount;
    var toSlideEl = me.slides[nextSlideNumber];
    me.currentSlideNumber = nextSlideNumber;
-   showElement(toSlideEl,true);
-   me.transitionGoing = true;
-   showElement(fromSlideEl,false,me.transition, function()
+   
+   me.transitionInGoing = true;
+   doShowNext = function()
+   {
+      showElement(toSlideEl,true,me.transitionIn,function()
+         {
+            if(!me.goneto)
+            {
+               me.transitionTimer = setTimeout(me.transitionToNextSlide_,new Number(me.transitionDelay));
+               me.transitionInGoing = false;
+            }
+            me.goneto=false;
+         });
+   };
+   var gapDuration;
+   if(me.options.gap >= 0)
+   {
+     gapDuration = new Number(me.options.gap);
+   } else
+   {
+     gapDuration = me.transitionOut.duration || 0;
+   }
+   me.transitionOutTimer = setTimeout(doShowNext,gapDuration);
+   
+   me.transitionOutGoing = true;
+   showElement(fromSlideEl,false,me.transitionOut, function()
       {
          if(!me.goneto)
          {
             me.reOrderWithNAtTop(nextSlideNumber);
             me.setActiveSlideNav(nextSlideNumber);
-            me.transitionTimer = setTimeout(me.transitionToNextSlide_,new Number(me.transitionDelay));
-            me.transitionGoing = false;
+            me.transitionOutGoing = false;
          }
          me.goneto=false;
       });

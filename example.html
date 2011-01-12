@@ -96,7 +96,7 @@
 </div>
 
 <script type="text/javascript" src="third-party-js/mylib.js"></script>
-<script type="text/javascript" src="third-party-js/mylib-transform-min.js"></script>
+<script type="text/javascript" src="third-party-js/mylib-transform.js"></script>
 <script type="text/javascript" src="slideshow-mylib.js"></script>
 <script type="text/javascript">
 var API,D,E,F;
@@ -122,7 +122,9 @@ var onLoad = function()
          var defaultSlideShowOptions = {
             "transitionDelay":3000,
             "startDelay":2000,
-            "transition":{ effects:[API.effects.scaleY, API.effects.fade], duration:1000 }
+			"gap":0,
+            "transitionOut":{ effects:[API.effects.scaleY, API.effects.fade], duration:1000 },
+            "transitionIn":{}
          };
          
          var slideshowManagerOptions = {
@@ -132,17 +134,24 @@ var onLoad = function()
          	 	 {
 					"transitionDelay":3000,
 					"startDelay":4000,
-					"transition":{ 
+					"transitionOut":{ 
 						effects:[API.effects.shake, API.effects.fade], 
+						duration:1000,ease:API.ease.quad },
+					"transitionIn":{ 
+						effects:[API.effects.fade], 
 						duration:1000,ease:API.ease.quad }
 				 },
 				 "slideshowC":
          	 	 {
 					"transitionDelay":3000,
 					"startDelay":1000,
-					"transition":{ 
+					"gap":2000,
+					"transitionOut":{ 
 						effects:API.effects.fade, 
-						duration:1000,ease:API.ease.sigmoid }
+						duration:1000,ease:API.ease.sigmoid },
+					"transitionIn":{ 
+						effects:[API.effects.fade], 
+						duration:1000,ease:API.ease.quad }
 				 }
             }
          };
