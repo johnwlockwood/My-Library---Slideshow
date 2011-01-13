@@ -10,14 +10,17 @@ a img
 	border:none;
 }
 
+.slideshow, .slide
+{
+	overflow:hidden;
+}
+
 #slideShowWrapperA .slideshowWrapper {
 	position:relative;
 	margin:0;
 	padding:0px 0px 0;
 	width:600px;
 	height:250px;
-	z-index:10;
-	overflow:hidden;
 }
 #slideShowWrapperA .slideshow
 {
@@ -45,7 +48,6 @@ a img
 	width:600px;
 	height:250px;
 	z-index:10;
-	overflow:hidden;
 }
 #slideShowWrapperB .slideshow
 {
@@ -73,7 +75,6 @@ a img
 	width:400px;
 	height:150px;
 	z-index:10;
-	overflow:hidden;
 }
 #slideShowWrapperC .slideshow
 {
@@ -81,7 +82,6 @@ a img
 	height:150px;
 	cursor:pointer;
 	
-	overflow:hidden;
 }
 
 

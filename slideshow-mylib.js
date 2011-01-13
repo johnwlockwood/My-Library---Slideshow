@@ -214,20 +214,24 @@ function SlideShow(el,options)
    {
       return
    }
+   var elementSize = API.getElementSizeStyle(me.el);
    setStyle(el,"position","relative");
    API.forEach(me.slides,function(slideEl,ii)
       {
          
+         API.sizeElement(slideEl,elementSize[0],elementSize[1]);
          if(ii===0)
          {
             setStyles(slideEl,{
                "position":"absolute",
-            "top":0,"left":0,"display":"block","zIndex":me.slideCount+1000-ii});
+            "top":0,"left":0,"overflow":"hidden",
+            "display":"block","zIndex":me.slideCount+1000-ii});
          } else 
          {
             setStyles(slideEl,{
                "position":"absolute",
-               "top":0,"left":0,"display":"none","zIndex":me.slideCount+1000-ii});
+               "top":0,"left":0,"overflow":"hidden",
+            "display":"none","zIndex":me.slideCount+1000-ii});
          }
          
          var url;
@@ -245,6 +249,14 @@ function SlideShow(el,options)
          }
          
       });
+   
+   //var parentEl = el.parentNode;
+   if(API.getStyle(el,'overflow') === 'hidden')
+   {
+      setStyle(el,'overflow','visible');
+   }
+   
+   
    
    me.nav = {};
    me.nav.slideNavEls = [];
